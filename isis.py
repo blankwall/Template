@@ -1,12 +1,5 @@
-import re
-import socket
-import time
-import sys
-import telnetlib
-import select
-import string
+import re,socket,time,sys,telnetlib
 from struct import pack,unpack
-
 
 
 def is_ipv6(ip):
@@ -26,7 +19,6 @@ def get_socket(chal):
         s.connect(chal)
     return s
 
-
 def lei(*nums):
     '''
     wrapper for struct.pack("I/i"), will identify signdness and
@@ -40,7 +32,6 @@ def lei(*nums):
             return pack("<i",num) # little-endian int
     else:
         return ''.join(map(lei,nums))
-
 
 def lei64(*nums):
     '''
