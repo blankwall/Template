@@ -1,7 +1,7 @@
 define pid
 	python
 import sys
-sys.path.append("/home/blankwall/Desktop")
+sys.path.append("/home/blankwall/Template”)
 from gdb_help import *
 pid("shitsco")
 end
