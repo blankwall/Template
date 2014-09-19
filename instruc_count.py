@@ -1,19 +1,24 @@
-'''http://shell-storm.org/blog/A-binary-analysis-count-me-if-you-can/'''
-import sys,subprocess
+import subprocess
+import sys
 import commands
+import string
 
-if __name__ == "__main__":
-    pwd  = ""
-    base = 0x2e
-    off  = 0x00
-    sav  = 0x00
-    while pwd.find("Good Password") == -1:
-        base += 1
-	if chr(base) == '<' or chr(base) == ">" or chr(base) == ";":
-		continue
-        pwd = pwd[:off] + chr(base) + pwd[off+1:];
+charset = '_'+string.digits+'abcdef'+'CTF{}'
 
-	cmd = "/home/blankwall/pin/pin -t /home/blankwall/pin/source/tools/ManualExamples/obj-ia32/inscount1.so  -- /home/blankwall/Desktop/a.out <<< %s; cat inscount.out" %(pwd)
+
+initpasswd = ''
+i = len(initpasswd)
+
+while len(initpasswd) != 37:
+    basepasswd = initpasswd + "_"*(37-len(initpasswd))
+    basecount = 0
+
+    result = dict()
+    for c in charset:
+
+        passwd = basepasswd[:i] + c + basepasswd[i+1:]
+
+	cmd = "/home/blankwall/pin/pin -t /home/blankwall/pin/source/tools/ManualExamples/obj-ia32/inscount0.so  -- /home/blankwall/Desktop/reverse400 <<< %s; cat inscount.out" %(passwd)
 
 
 	p = subprocess.Popen(["/bin/bash", "-c",cmd], stdout=subprocess.PIPE)
@@ -21,29 +26,25 @@ if __name__ == "__main__":
 	
 	print out
 	if "YES" in out[0]:
-		print pwd
+		print initpasswd
 		break
 	try:
 		x = [int(s) for s in out[0].split() if s.isdigit()][0]
 	except:
 		continue
+	icount = x
+        if basecount == 0:
+            basecount = icount
 
-	res = x
-        print "insert('%s' INS: %d) ins" %(pwd, res)
-	print res-sav
-	if base > 125:
-		break
+        result[c] = icount
 
-        if sav == 0x00:
-            sav = res
-        if res - sav > 15000:
-            off += 1
-            if off >= len(pwd):
-		pwd += " "
-#                break
-            base = 0x2d
-            sav = 0
-        sav = res
-   
-    print "The password is %s" %(pwd)
-    sys.exit(0)
+        print "%s = %d %d ins" %(passwd, icount, icount-basecount)
+
+        #shortcut
+        if icount-basecount > 900:
+            initpasswd += c
+            i += 1
+            break
+
+
+print initpasswd
