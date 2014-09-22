@@ -99,6 +99,7 @@ def recv_all(s):
         pass
 
 def num_string(x):
+    ''' Returns an array of numbers from a string FIX THIS'''
     return [int(l) for l in x.split() if l.isdigit()]
 
 
