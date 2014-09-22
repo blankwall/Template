@@ -1,6 +1,7 @@
 import re,socket,time,sys,telnetlib
 from struct import pack,unpack
 
+pattern = "AAA%AAsAABAA$AAnAACAA-AA(AADAA;AA)AAEAAaAA0AAFAAbAA1AAGAAcAA2AAHAAdAA3AAIAAeAA4AAJAAfAA5AAKAAgAA6AALAAhAA7AAMAAiAA8AANAAjAA9AAOAAkAAPAAlAAQAAmAARAAnAASAAoAATAApAAUAAqAAVAArAAWAAsAAXAAtAAYAAuAAZAAvAAwAAxAAyAAzA%%A%sA%BA%$A%nA%CA%-A%(A%DA%;A%)A%EA%aA%0A%FA%bA%1A%GA%cA%2A%HA%dA%3A%IA%eA%4A%JA%fA%5A%KA%gA%6A%LA%hA%7A%MA%iA%8A%NA%jA%9A%OA%kA%PA%lA%QA%mA%RA%nA%SA%oA%TA%pA%UA%qA%VA%rA%WA%sA%XA%tA%YA%uA%ZA%vA%wA%xA%yA%zAs%AssAsBAs$AsnAsCAs-As(AsDAs;As)AsEAsaAs0AsFAsbAs1AsGAscAs2AsHAsdAs3AsIAseAs4AsJAsfA"
 
 def is_ipv6(ip):
     return ':' in ip
@@ -78,8 +79,6 @@ def chunk(iterable, chunk_size):
     for i in range(0, len(iterable), chunk_size):
         yield iterable[i:i+chunk_size]
 
-
-
 def telnet_shell(sock):
     '''pass to this function a socket object with a listening shell(socket reuse)'''
     tc = telnetlib.Telnet()  
@@ -98,6 +97,9 @@ def recv_all(s):
     '''receive and discard all data from a connection'''
     while len(s.recv(1024)) == 1024:
         pass
+
+def num_string(x):
+    return [int(l) for l in x.split() if l.isdigit()]
 
 
 
