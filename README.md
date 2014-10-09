@@ -1,4 +1,4 @@
-Copy of commonly used tools in CTF competitions. Clone into ~/ with commands below. Also Peda only works with Python 2 at the moment so older versions of gdb are also available in the CTF directory.
+Copy of commonly used tools in CTF competitions. Clone into ~/ with commands below.
 
 ```
 echo "set auto-load safe-path /" >> ~/.gdbinit;
