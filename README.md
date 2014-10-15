@@ -1,8 +1,7 @@
-Copy of commonly used tools in CTF competitions. Clone into ~/ with commands below.
+Copy of commonly used tools in CTF competitions. 
 
 ```
-echo "set auto-load safe-path /" >> ~/.gdbinit;
-git clone https://github.com/longld/peda.git ~/peda
-git clone https://github.com/blankwall/Template.git ~/Template
+wget https://raw.githubusercontent.com/blankwall/Template/master/install.s
+./install.s
 ```
 
