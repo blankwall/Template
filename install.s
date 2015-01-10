@@ -7,6 +7,7 @@ fi
 
 chmod +x gdb
 sudo mv gdb /usr/bin/gdb
-echo "set auto-load safe-path /" >> ~/.gdbinit;
+sudo apt-get install -y vim tmux git
+echo "set auto-load safe-path /" >> ~/.gdbinit
 git clone https://github.com/longld/peda.git ~/peda
 git clone https://github.com/blankwall/Template.git ~/Template
