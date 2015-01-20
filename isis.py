@@ -86,13 +86,12 @@ def telnet_shell(sock):
     tc.interact() 
     return
 
-def recv_until(s, data):
-	'''receive data from s until string data is found s(socket, "string")'''
-	p = ""
-	while data not in p:
-		p += s.recv(0x1)
-	return p
-
+def recv_until(s, delim='\n'):
+  data = ''
+  while not data.endswith(delim):
+    data += s.read(1)
+  return data
+  
 def recv_all(s):
     '''receive and discard all data from a connection'''
     while len(s.recv(1024)) == 1024:
