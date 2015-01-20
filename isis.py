@@ -102,7 +102,13 @@ def num_string(x):
     ''' Returns an array of numbers from a string FIX THIS'''
     return [int(l) for l in x.split() if l.isdigit()]
 
-
+def make_nasm(code):
+    import os, time
+    with open('/tmp/nasm.s', 'w') as outf:
+        outf.write(code)
+    if os.system('nasm /tmp/nasm.s') != 0:
+        raise ValueError("nasm failed")
+    return open('/tmp/nasm', 'rb').read()
 
 
 
