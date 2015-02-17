@@ -109,6 +109,15 @@ def make_nasm(code):
         raise ValueError("nasm failed")
     return open('/tmp/nasm', 'rb').read()
 
-
-
+def get_shellcode(shellcode):
+    import os
+    shellcode_file = "%s/Generic-Shellcode/%s" % \
+                    (os.path.dirname(os.path.realpath(__file__)), shellcode)
+    if os.path.isfile(shellcode_file):
+        with open(shellcode_file, "r") as f:
+            shellcode = ""
+            exec f.read()
+            return shellcode, port
+    else:
+        raise ValueError("[-] Unable to find shellcode: %s" % shellcode)
 
